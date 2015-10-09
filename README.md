@@ -1,1 +1,7 @@
-Segunda versão do projeto feito com Django e bootstrap
+Controle de chamados (Telefonia)
+
+Faz o controle de atendimento de chamados.
+
+Feito em Django com biblioteca bootstrap.
+
+Configuração inicial usando Postgresql.
