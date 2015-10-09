@@ -1,0 +1,1 @@
+Segunda versão do projeto feito com Django e bootstrap

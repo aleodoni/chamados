@@ -1,0 +1,83 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<form name="frmtroca" id="frmtroca" method="POST" action="">
+    {% csrf_token %}
+    <br/>
+    <div class="panel panel-default">
+        <div class="panel-heading">Troca de Equipamentos</div>
+        <div class="panel-body">
+
+        {% if form.errors %}
+            <div class="alert alert-danger">
+                {% for field in form %}
+                    {% if field.errors %}
+                        <strong>{{ field.label }}</strong>: {{ field.errors|striptags }}<br/>
+                    {% endif %}
+                {% endfor %}
+            </div>
+        {% endif %}
+
+        <input type="hidden" name="chamado" value="{{ id_chamado }}" />
+
+        <div class="row">
+            <div class="col-sm-12">
+                <label for="tipo_equipamento">Tipo de Equipamento</label>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-12">
+                <select id="tipo_equipamento" class="form-control" name="tipo_equipamento" autofocus>
+                {% for item in form.tipo_equipamento.field.choices %}
+                    <option value="{{ item.0 }}"{% if form.tipo_equipamento.value|slugify == item.0|slugify %}selected="selected"{% endif %}>{{ item.1 }}</option>
+                {% endfor %}
+                </select>
+            </div>
+        </div>
+        <br/>
+
+        <div class="row">
+            <div class="col-sm-6">
+                <label for="serial_velho">Serial Antigo</label>
+            </div>
+            <div class="col-sm-6">
+                <label for="serial_novo">Serial Novo</label>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-6">
+                <input id="serial_velho" name="serial_velho" type="text" class="form-control" value="{{ form.serial_velho.value }}" inline="Serial Antigo">
+            </div>
+            <div class="col-sm-6">
+                <input id="serial_novo" name="serial_novo" type="text" class="form-control" value="{{ form.serial_novo.value }}">
+            </div>
+        </div>
+    	<br/>
+
+        <div class="row">
+            <div class="col-sm-12">
+                <label for="tipo_equipamento">Motivo</label>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-12">
+                <textarea id="motivo" name="motivo" rows="5" class="form-control">{{ form.motivo.value }}</textarea>
+            </div>
+        </div>
+    	<br/>
+
+        <a id="btnsalva" href="javascript:salva()" class="btn btn-primary">
+            <span class="glyphicon glyphicon-save"></span> Gravar
+        </a>
+    	
+    </div>
+</form>
+
+<script>
+	function salva() {
+		$("#frmtroca").submit();
+	}
+</script>
+
+{% endblock %}

@@ -1,0 +1,200 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<br/>
+<form name="frmchamado" id="frmchamado" method="POST" action="">
+    {% csrf_token %}
+    <div class="panel panel-default">
+        <div class="panel-heading">Abertura de Chamado</div>
+        <div class="panel-body">
+
+        {% if form.errors %}
+            <div class="alert alert-danger">
+                {% for field in form %}
+                    {% if field.errors %}
+                        <strong>{{ field.label }}</strong>: {{ field.errors|striptags }}<br/>
+                    {% endif %}
+                {% endfor %}
+            </div>
+        {% endif %}
+
+        <h3>Dados do chamado</h3>
+
+        <input type="hidden" name="id" id="id" value="{{ form.id.value }}" />
+
+        <div class="row">
+            <div class="col-sm-6">
+                <label for="abertura">Abertura</label>
+            </div>
+            <div class="col-sm-6">
+                <label for="fechamento">Fechamento</label>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-sm-6">
+                <div class="input-group date">
+                    <input id="abertura" name="abertura" class="form-control" value="{{ form.abertura.value|date:"d/m/Y" }}" data-date-format="dd/mm/yyyy" placeholder="Abertura do chamado" autofocus> 
+                    <span class="input-group-addon"><i class="glyphicon glyphicon-th"></i></span>
+                </div>
+            </div>
+            <div class="col-sm-6">
+                <div class="input-group date">
+                    <input id="fechamento" name="fechamento" class="form-control" value="{{ form.fechamento.value|date:"d/m/Y" }}" data-date-format="dd/mm/yyyy" placeholder="Fechamento do chamado"> 
+                    <span class="input-group-addon"><i class="glyphicon glyphicon-th"></i></span>
+                </div>
+            </div>
+        </div>
+        <br/>
+
+        <div class="row">
+            <div class="col-sm-6">
+                <label for="solicitante">Solicitante</label>
+            </div>
+            <div class="col-sm-6">
+                <label for="departamento">Departamento</label>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-sm-6">
+                <input id="solicitante" name="solicitante" class="form-control" value="{{ form.solicitante.value }}" placeholder="Solicitante" required>
+            </div>
+            <div class="col-sm-6">
+                <select id="departamento" class="form-control" name="departamento">
+                {% for item in form.departamento.field.choices %}
+                    <option value="{{ item.0 }}"{% if form.departamento.value == item.0 %}selected="selected"{% endif %}>{{ item.1 }}</option>
+                {% endfor %}
+                </select>
+            </div>
+        </div>
+        <br/>
+
+        <div class="row">
+            <div class="col-sm-6">
+                <label for="ramal_atendimento">Ramal Atendimento</label>
+            </div>
+            <div class="col-sm-6">
+                <label for="ramal_contato">Ramal Contato</label>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-6">
+                <select id="ramal_atendimento" class="form-control" name="ramal_atendimento" data-options="{editable: false}">
+                {% for item in form.ramal_atendimento.field.choices %}
+                    <option value="{{ item.0 }}"{% if form.ramal_atendimento.value == item.0 %}selected="selected"{% endif %}>{{ item.1 }}</option>
+                {% endfor %}
+                </select>
+            </div>
+            <div class="col-sm-6">
+                <select id="ramal_contato" class="form-control" name="ramal_contato" data-options="{editable: false}">
+                {% for item in form.ramal_contato.field.choices %}
+                    <option value="{{ item.0 }}"{% if form.ramal_contato.value == item.0 %}selected="selected"{% endif %}>{{ item.1 }}</option>
+                {% endfor %}
+                </select>
+            </div>
+        </div>
+        <br/>
+
+        <div class="row">
+            <div class="col-sm-6">
+                <label for="problema">Problema</label>
+            </div>
+            <div class="col-sm-6">
+                <label for="execucao">Execução</label>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-sm-6">
+                <textarea id="problema" name="problema" class="form-control" rows="5">{{ form.problema.value }}</textarea>
+            </div>
+            <div class="col-sm-6">
+                <textarea id="execucao" name="execucao" class="form-control" rows="5">{{ form.execucao.value }}</textarea>
+            </div>
+        </div>
+    	<br/>
+
+        <div class="row">
+            <div class="col-sm-4">
+                <label for="status">Status</label>
+            </div>
+            <div class="col-sm-4">
+                <label for="urgencia">Urgência</label>
+            </div>
+            <div class="col-sm-4">
+                <label for="executor">Executor</label>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-4">
+                <select id="status" class="form-control" name="status">
+                {% for item in form.status.field.choices %}
+                    <option value="{{ item.0 }}"{% if form.status.value|slugify == item.0|slugify %}selected="selected"{% endif %}>{{ item.1 }}</option>
+                {% endfor %}
+                </select>
+            </div>
+            <div class="col-sm-4">
+                <select id="urgencia" class="form-control" name="urgencia">
+                {% for item in form.urgencia.field.choices %}
+                    <option value="{{ item.0 }}"{% if form.urgencia.value|slugify == item.0|slugify %}selected="selected"{% endif %}>{{ item.1 }}</option>
+                {% endfor %}
+                </select>
+            </div>
+            <div class="col-sm-4">
+                <select id="executor" class="form-control" name="executor">
+                {% for item in form.executor.field.choices %}
+                    <option value="{{ item.0 }}"{% if form.executor.value|slugify == item.0|slugify %}selected="selected"{% endif %}>{{ item.1 }}</option>
+                {% endfor %}
+                </select>
+            </div>
+    	</div>
+    	<br/>
+   		<a id="btnsalva" href="javascript:salva()" class="btn btn-primary">
+            <span class="glyphicon glyphicon-save"></span> Gravar
+        </a>
+        <a id="btntroca" href="javascript:troca()" class="btn btn-default">
+            <span class="glyphicon glyphicon-cog"></span> Troca equipamento
+        </a>
+    </div>
+</form>
+
+<form name="frmTroca" id="frmTroca" method="GET" action="troca/">
+</form>
+
+<script language="javascript">
+
+    function salva() {
+    	$("#frmchamado").submit();
+    }
+
+    function troca() {
+        $("#frmTroca").attr('action', '/telefonia/troca/' + $("#id").val());
+        $("#frmTroca").submit();
+    }
+
+    $( document ).ready(function() {
+        $('.input-group.date').datepicker({
+            format: "dd/mm/yyyy",
+            language: "pt-BR",
+            todayHighlight: true,
+            clearBtn: true,
+            autoclose: true,
+        });
+
+        if ($("#id").val() != 'None') {
+            $("#btntroca").attr('disabled', false);
+            $("#btntroca").attr('href', 'javascript:troca()');
+        }
+        else {
+            $("#btntroca").attr('disabled', true);
+            $("#btntroca").attr('href', '#');
+        }
+    });
+
+
+
+</script>
+
+{% endblock %}

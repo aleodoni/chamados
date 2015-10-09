@@ -1,0 +1,124 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <br/>
+	<div class="panel panel-default">
+        <div class="panel-heading">Troca de Equipamentos</div>
+        <div class="panel-body">
+
+        {% if messages %}
+            <div class="alert alert-success">
+            {% for message in messages %}
+                {{ message }}
+            {% endfor %}
+            </div>
+        {% endif %}
+
+        <h3>Informações do chamado</h3>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Abertura</th>
+                    <th>Departamento</th>
+                    <th>Solicitante</th>
+                    <th>Problema</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>{{ chamado.abertura|date:"d/m/Y" }}</td>
+                    <td>{{ chamado.departamento.nome }}</td>
+                    <td>{{ chamado.solicitante }}</td>
+                    <td>{{ chamado.problema }}</td>
+                </tr>
+            </tbody>
+        </table>
+
+    <h3>Equipamentos trocados no chamado</h3>
+    <table id="tt" class="table table-striped table-bordered table-hover">
+    <thead>
+        <tr>
+            <th width="52%">Tipo Equipamento</th>
+            <th width="20%">Serial Velho</th>
+            <th width="20%">Serial Novo</th>
+            <th width="5%" align="center"></th>
+            <th width="5%" align="center"></th>
+        </tr>
+    </thead>
+    <tbody>
+        {% if troca_list %}
+            {% for item in troca_list %}
+    	       <tr>
+    		      <td>{{ item.tipo_equipamento.nome }}</td>
+                  <td>{{ item.serial_velho }}</td>
+                  <td>{{ item.serial_novo }}</td>
+                  <td><a href="edita/{{ item.id }}" class="btn btn-primary btn-xs">
+                    <span class="glyphicon glyphicon-edit"></span> Altera
+                  </a></td>
+                  <td><a href="javascript:deleta({{ item.id }})" class="btn btn-danger btn-xs">
+                    <span class="glyphicon glyphicon-trash"></span> Exclui
+                  </a></td>
+    	       </tr>
+            {% endfor %}
+        {% endif %}
+    </tbody>
+	</table>
+	<br/>
+	<a id="inclui" href="nova" class="btn btn-default">
+        <span class="glyphicon glyphicon-plus"></span> Nova troca
+    </a>
+    <a id="back" href="javascript:volta();" class="btn btn-default">
+        <span class="glyphicon glyphicon-step-backward"></span> Voltar ao chamado
+    </a>
+
+    <form name="frmdeleta" id="frmdeleta" method="POST" action="">
+        {% csrf_token %}
+        <input type="hidden" id="pk" name="pk" />
+        <input type="hidden" id="chamado_id" name="chamado_id" value="{{ chamado.id }}" />
+    </form>
+
+    <script>
+        function deleta(troca_id) {
+            var r = confirm('Confirma a exclusão da troca ?')
+            if (r == true) {
+                $("#pk").val(troca_id);
+                $("#frmdeleta").attr('action', 'deleta/' +  $("#pk").val() + '/');
+                $("#frmdeleta").submit();       
+            }
+        }
+
+        function volta() {
+            location.href = '/telefonia/chamado/edita/' +  $("#chamado_id").val() + '/'
+        }
+
+        $(document).ready(function () {
+       
+        $('#tt').DataTable({
+            "language": {
+                "info": "Páginas _PAGE_ de _PAGES_",
+                "emptyTable": "Nenhum equipamento para troca",
+                "decimal": ",",
+                "thousands": ".",
+                "oPaginate": {
+                    "sFirst": '<span class="glyphicon glyphicon-fast-backward"></span>',
+                    "sLast": '<span class="glyphicon glyphicon-fast-forward"></span>',
+                    "sNext": '<span class="glyphicon glyphicon-forward"></span>',
+                    "sPrevious": '<span class="glyphicon glyphicon-backward"></span>'
+                }
+            },
+            "bLengthChange": false,
+            "bFilter": false,
+            "bInfo": false,
+            "sPaginationType": "full_numbers",
+            "aoColumns": [
+                { "bSortable": true },
+                { "bSortable": true },
+                { "bSortable": true },
+                { "bSortable": false },
+                { "bSortable": false },
+            ]
+        });
+    });
+    </script>
+   
+{% endblock %}

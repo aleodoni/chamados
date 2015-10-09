@@ -1,0 +1,21 @@
+{% extends "base_login.html" %}
+
+{% block content %}
+
+<form class="form-signin" method="post" action="{% url 'django.contrib.auth.views.login' %}">
+	{% csrf_token %}
+	{% if form.errors %}
+		<div class="alert alert-danger">
+			<p><strong>Erro</strong>: Usuário ou senha incorretos.</p>
+		</div>
+	{% endif %}
+	<h3 class="form-signin-heading">Acesso ao sistema</h3>
+	<label for="id_username" class="sr-only">Usuário</label>
+	<input type="username" id="id_username" class="form-control" placeholder="Usuário" name="username" required autofocus>
+	<label for="id_password" class="sr-only">Senha</label>
+	<input type="password" id="id_password" name="password" class="form-control" placeholder="Senha" required>
+	<button class="btn btn-lg btn-primary btn-block" type="submit">Login</button>
+	<input type="hidden" name="next" value="{{ next }}" />
+</form>
+
+{% endblock %}
