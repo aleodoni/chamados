@@ -19,7 +19,12 @@ from django.contrib import messages
 from datetime import datetime    
 
 from .models import Status, Executor, Chamado, Urgencia, TrocaEquipamento
-from .forms import PesquisaForm, ChamadoForm, TrocaForm
+
+from .forms import PesquisaForm
+from .forms import ChamadoForm
+from .forms import TrocaForm
+from .forms import ChamadoTerceiroForm
+
 from .util import status_default, executor_default
 
 from easy_pdf.views import PDFTemplateView
@@ -221,3 +226,18 @@ class ChamadoDeleteView(DeleteView):
 	def delete(self, request, *args, **kwargs):
 		messages.success(self.request, self.success_message)
 		return super(ChamadoDeleteView, self).delete(request, *args, **kwargs)
+
+#-----------------------------------------------------------------------------------------------------------------------------
+# classes para abertura de chamados por terceiros
+#-----------------------------------------------------------------------------------------------------------------------------
+class ChamadoTerceiroCreateView(SuccessMessageMixin, CreateView):
+	template_name = 'telefonia/chamado_terceiro.html'
+	model = Chamado
+	form_class = ChamadoTerceiroForm
+	success_url = '/telefonia/chamado_terceiro'
+	success_message = "Chamado adicionado com sucesso. O setor de Telefonia entrará em contato brevemente."
+
+	def get_initial(self):
+		return { 'solicitante': '', 'problema': '' }
+
+	

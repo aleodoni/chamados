@@ -19,4 +19,5 @@ urlpatterns = [
 	url(r'^relatorio/chamados.pdf$', views.HelloPDFView.as_view(), name='relatorio_chamados'),
 	url(r'^chamado/$', views.ChamadoCreateView.as_view(), name='chamado'),
 	url(r'^chamado/edita/(?P<pk>[0-9]+)/$', views.ChamadoUpdateView.as_view(), name='edita'),
+	url(r'^chamado_terceiro/$', views.ChamadoTerceiroCreateView.as_view(), name='chamado_terceiro'),
 ]

@@ -34,3 +34,14 @@ class TrocaForm(forms.ModelForm):
 		fields = ('chamado', 'tipo_equipamento', 'serial_velho', 'serial_novo', 'motivo')
 
 	tipo_equipamento = forms.ModelChoiceField(queryset=TipoEquipamento.objects.all(), empty_label=None)
+
+class ChamadoTerceiroForm(forms.ModelForm):
+	class Meta:
+		model = Chamado
+		fields = ('id', 'abertura', 'departamento', 'ramal_atendimento', 'ramal_contato', 'problema')
+
+	id = forms.CharField(widget=forms.HiddenInput)
+	departamento = forms.ModelChoiceField(queryset=Departamento.objects.all(), empty_label=None)
+	ramal_atendimento = forms.ModelChoiceField(queryset=Ramal.objects.all(), empty_label=None)
+	ramal_contato = forms.ModelChoiceField(queryset=Ramal.objects.all(), empty_label=None)
+	#status = forms.IntegerField(widget=forms.HiddenInput)
