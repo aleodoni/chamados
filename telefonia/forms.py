@@ -38,7 +38,7 @@ class TrocaForm(forms.ModelForm):
 class ChamadoTerceiroForm(forms.ModelForm):
 	class Meta:
 		model = Chamado
-		fields = ('id', 'abertura', 'departamento', 'ramal_atendimento', 'ramal_contato', 'problema')
+		fields = ('id', 'abertura', 'departamento', 'ramal_atendimento', 'ramal_contato', 'problema', 'solicitante')
 
 	id = forms.CharField(widget=forms.HiddenInput)
 	departamento = forms.ModelChoiceField(queryset=Departamento.objects.all(), empty_label=None)

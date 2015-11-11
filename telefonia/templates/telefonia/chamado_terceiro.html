@@ -32,27 +32,38 @@
         <input type="hidden" name="id" id="id" value="{{ form.id.value }}" />
 
         <div class="row">
-            <div class="col-sm-6">
+            <div class="col-sm-12">
                 <label for="abertura">Abertura</label>
             </div>
-            <div class="col-sm-6">
-                <label for="departamento">Departamento</label>
-            </div>
         </div>
-
         <div class="row">
-            <div class="col-sm-6">
+            <div class="col-sm-12">
                 <div class="input-group date">
                     <input id="abertura" name="abertura" class="form-control" value="{{ form.abertura.value|date:"d/m/Y" }}" data-date-format="dd/mm/yyyy" placeholder="Abertura do chamado" autofocus> 
                     <span class="input-group-addon"><i class="glyphicon glyphicon-th"></i></span>
                 </div>
             </div>
+        </div>
+        <br/>
+
+        <div class="row">
+            <div class="col-sm-6">
+                <label for="departamento">Departamento</label>
+            </div>
+            <div class="col-sm-6">
+                <label for="departamento">Solicitante</label>
+            </div>
+        </div>
+        <div class="row">
             <div class="col-sm-6">
                 <select id="departamento" class="form-control" name="departamento">
                 {% for item in form.departamento.field.choices %}
                     <option value="{{ item.0 }}"{% if form.departamento.value == item.0 %}selected="selected"{% endif %}>{{ item.1 }}</option>
                 {% endfor %}
                 </select>
+            </div>
+            <div class="col-sm-6">
+                <input type="text" id="solicitante" name="solicitante" class="form-control">{{ form.solicitante.value }}</input>
             </div>
         </div>
         <br/>

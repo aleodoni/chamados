@@ -126,3 +126,10 @@ LOGOUT_URL = '/logout/'
 DATE_FORMAT = 'd/m/Y'
 
 #STATICFILES_DIRS = (os.path.join(BASE_DIR, '../telefonia/static'),)
+
+#---------------------------------------------------------------------------------------------------------------------
+# Variáveis globais usadas no sistema
+#---------------------------------------------------------------------------------------------------------------------
+STATUS_DEFAULT = 2
+URGENCIA_DEFAULT = 2
+EXECUTOR_DEFAULT = 1

@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
 from django.db import models
+from django.conf import settings
 
 #--------------------------------------------------------------------------------------
 class Departamento(models.Model):
@@ -80,16 +81,17 @@ class Chamado(models.Model):
 	# status, urgencia e executor nao sao informados pelo usuario e o sistema devera buscar os valores
 	# padrao no banco de dados
 	# ATENCAO - deve-se alterar os valores abaixo (pk=?) para buscar os valores padrao do BD de cada um
+	#           estes valores foram definidos como variáveis globais no arquivo settings.py
 
-	def save(self, *args, **kwargs):                                            
+	def save(self, *args, **kwargs):                                       
 		if getattr(self, 'status', None) == None:
-			status = Status.objects.get(pk=2)
+			status = Status.objects.get(pk=settings.STATUS_DEFAULT)
 			self.status = status
 		if getattr(self, 'urgencia', None) == None:
-			urgencia = Urgencia.objects.get(pk=2)
+			urgencia = Urgencia.objects.get(pk=settings.URGENCIA_DEFAULT)
 			self.urgencia = urgencia
 		if getattr(self, 'executor', None) == None:
-			executor = Executor.objects.get(pk=1)
+			executor = Executor.objects.get(pk=settings.EXECUTOR_DEFAULT)
 			self.executor = executor
 		super(Chamado, self).save(*args, **kwargs)   
 
