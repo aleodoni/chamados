@@ -1,12 +1,13 @@
-{% extends "base.html" %}
+{% extends "base_guest.html" %}
 
 {% block content %}
 
 <br/>
 <form name="frmchamado_terceiro" id="frmchamado_terceiro" method="POST" action="">
     {% csrf_token %}
+    
     <div class="panel panel-default">
-        <div class="panel-heading">Abertura de Chamado por Terceiros</div>
+        <div class="panel-heading">Abertura de Chamado</div>
         <div class="panel-body">
 
         {% if form.errors %}
@@ -39,7 +40,7 @@
         <div class="row">
             <div class="col-sm-12">
                 <div class="input-group date">
-                    <input id="abertura" name="abertura" class="form-control" value="{{ form.abertura.value|date:"d/m/Y" }}" data-date-format="dd/mm/yyyy" placeholder="Abertura do chamado" autofocus> 
+                    <input id="id_abertura" name="abertura" class="form-control" value="{{ form.abertura.value|date:"d/m/Y" }}" data-date-format="dd/mm/yyyy" placeholder="Abertura do chamado" autofocus> 
                     <span class="input-group-addon"><i class="glyphicon glyphicon-th"></i></span>
                 </div>
             </div>
@@ -47,30 +48,36 @@
         <br/>
 
         <div class="row">
-            <div class="col-sm-6">
+            <div class="col-sm-4">
                 <label for="departamento">Departamento</label>
             </div>
-            <div class="col-sm-6">
-                <label for="departamento">Solicitante</label>
+            <div class="col-sm-4">
+                <label for="solicitante">Solicitante</label>
+            </div>
+            <div class="col-sm-4">
+                <label for="email_silicitante">email Solicitante</label>
             </div>
         </div>
         <div class="row">
-            <div class="col-sm-6">
+            <div class="col-sm-4">
                 <select id="departamento" class="form-control" name="departamento">
                 {% for item in form.departamento.field.choices %}
                     <option value="{{ item.0 }}"{% if form.departamento.value == item.0 %}selected="selected"{% endif %}>{{ item.1 }}</option>
                 {% endfor %}
                 </select>
             </div>
-            <div class="col-sm-6">
-                <input type="text" id="solicitante" name="solicitante" class="form-control">{{ form.solicitante.value }}</input>
+            <div class="col-sm-4">
+                <input type="text" id="id_solicitante" name="solicitante" class="form-control">{{ form.solicitante.value }}</input>
+            </div>
+            <div class="col-sm-4">
+                <input type="text" id="id_email_solicitante" name="email_solicitante" class="form-control">{{ form.email_solicitante.value }}</input>
             </div>
         </div>
         <br/>
 
         <div class="row">
             <div class="col-sm-6">
-                <label for="ramal_atendimento">Ramal Atendimento</label>
+                <label for="ramal_atendimento">Ramal com Defeito</label>
             </div>
             <div class="col-sm-6">
                 <label for="ramal_contato">Ramal Contato</label>
@@ -102,7 +109,7 @@
 
         <div class="row">
             <div class="col-sm-12">
-                <textarea id="problema" name="problema" class="form-control" rows="5">{{ form.problema.value }}</textarea>
+                <textarea id="id_problema" name="problema" class="form-control" rows="5">{{ form.problema.value }}</textarea>
             </div>
         </div>
     	<br/>

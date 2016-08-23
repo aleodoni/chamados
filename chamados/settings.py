@@ -133,3 +133,13 @@ DATE_FORMAT = 'd/m/Y'
 STATUS_DEFAULT = 2
 URGENCIA_DEFAULT = 2
 EXECUTOR_DEFAULT = 1
+
+
+#---------------------------------------------------------------------------------------------------------------------
+# Variáveis para envio de email
+#---------------------------------------------------------------------------------------------------------------------
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_HOST_USER = 'aleodoni'
+EMAIL_HOST_PASSWORD = 'aledani2014'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True

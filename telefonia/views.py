@@ -208,7 +208,7 @@ class ChamadoCreateView(SuccessMessageMixin, CreateView):
 	success_message = "Chamado adicionado com sucesso"
 
 	def get_initial(self):
-		return { 'solicitante': '', 'problema': '', 'execucao': '', 'status': 2, 'urgencia': 2, 'executor': 1 }
+		return { 'solicitante': '', 'problema': '', 'execucao': '', 'status': 2, 'urgencia': 2, 'executor': 1, 'email_solicitante': '' }
 
 class ChamadoUpdateView(SuccessMessageMixin, UpdateView):
 	template_name = 'telefonia/chamado.html'
@@ -216,6 +216,10 @@ class ChamadoUpdateView(SuccessMessageMixin, UpdateView):
 	form_class = ChamadoForm
 	success_url = '/telefonia'
 	success_message = "Chamado atualizado com sucesso"
+
+	def form_valid(self, form):
+		form.envia_email_atualizacao()
+		return super(ChamadoUpdateView, self).form_valid(form)
 
 class ChamadoDeleteView(DeleteView):
 	template_name = ''
@@ -238,6 +242,9 @@ class ChamadoTerceiroCreateView(SuccessMessageMixin, CreateView):
 	success_message = "Chamado adicionado com sucesso. O setor de Telefonia entrará em contato brevemente."
 
 	def get_initial(self):
-		return { 'solicitante': '', 'problema': '' }
+		return { 'solicitante': '', 'problema': '', 'email_solicitante': ''}
 
+	def form_valid(self, form):
+		form.send_email()
+		return super(ChamadoTerceiroCreateView, self).form_valid(form)
 	

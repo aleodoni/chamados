@@ -1,0 +1,14 @@
+Este é um email automático enviado pelo Controle de Chamados do Setor de Telefonia da CMC.
+
+
+Seu chamado foi aberto e será atendido brevemente pelo responsável.
+
+
+As informações do seu chamado estão abaixo :
+
+Data de abertura : {{ abertura }}
+Departamento : {{ departamento }}
+Solicitante : {{ solicitante }}
+Ramal com defeito : {{ ramal_defeito }}
+Ramal para contato : {{ ramal_contato }}
+Problema : {{ problema }}

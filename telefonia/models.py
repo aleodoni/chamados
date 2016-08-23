@@ -73,6 +73,7 @@ class Chamado(models.Model):
 	status = models.ForeignKey('Status')
 	urgencia = models.ForeignKey('Urgencia')
 	executor = models.ForeignKey('Executor')
+	email_solicitante = models.EmailField(blank=True, null=True)
 
 	def __unicode__(self):
 		return "Chamado : " + unicode(self.id)
@@ -109,3 +110,10 @@ class TrocaEquipamento(models.Model):
 	serial_velho = models.CharField(max_length=50, null=True)
 	serial_novo = models.CharField(max_length=50, null=True)
 	motivo = models.CharField(max_length=500, blank=True, null=True)
+
+#--------------------------------------------------------------------------------------
+class ProblemasComuns(models.Model):
+	problema = models.CharField(max_length=500)
+
+	def __unicode__(self):
+		return self.nome

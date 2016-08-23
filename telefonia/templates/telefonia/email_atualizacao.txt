@@ -1,0 +1,18 @@
+Este é um email automático enviado pelo Controle de Chamados do Setor de Telefonia da CMC.
+
+
+Seu chamado foi atualizado e agora encontra-se desta maneira : 
+
+
+Data de abertura : {{ abertura }}
+Departamento : {{ departamento }}
+Solicitante : {{ solicitante }}
+Ramal com defeito : {{ ramal_defeito }}
+Ramal para contato : {{ ramal_contato }}
+Problema : {{ problema }}
+
+Data de fechamento : {{ fechamento }}
+Status : {{ status }}
+Urgência : {{ urgencia }}
+Executor : {{ executor }}
+Execução : {{ execucao }}
