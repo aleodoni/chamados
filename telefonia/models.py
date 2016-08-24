@@ -73,6 +73,7 @@ class Chamado(models.Model):
 	status = models.ForeignKey('Status')
 	urgencia = models.ForeignKey('Urgencia')
 	executor = models.ForeignKey('Executor')
+	problema_comum = models.ForeignKey('ProblemasComuns')
 	email_solicitante = models.EmailField(blank=True, null=True)
 
 	def __unicode__(self):
@@ -116,4 +117,4 @@ class ProblemasComuns(models.Model):
 	problema = models.CharField(max_length=500)
 
 	def __unicode__(self):
-		return self.nome
+		return self.problema

@@ -9,7 +9,8 @@ Departamento : {{ departamento }}
 Solicitante : {{ solicitante }}
 Ramal com defeito : {{ ramal_defeito }}
 Ramal para contato : {{ ramal_contato }}
-Problema : {{ problema }}
+Problema : {{ problema_comum }}
+Detalhamento Problema : {{ problema }}
 
 Data de fechamento : {{ fechamento }}
 Status : {{ status }}

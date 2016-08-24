@@ -104,8 +104,24 @@
         <br/>
 
         <div class="row">
+            <div class="col-sm-12">
+                <label for="problema_comum">Problema</label>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-12">
+                <select id="problema_comum" class="form-control" name="problema_comum" data-options="{editable: false}">
+                {% for item in form.problema_comum.field.choices %}
+                    <option value="{{ item.0 }}"{% if form.problema_comum.value == item.0 %}selected="selected"{% endif %}>{{ item.1 }}</option>
+                {% endfor %}
+                </select>
+            </div>
+        </div>
+        <br/>
+
+        <div class="row">
             <div class="col-sm-6">
-                <label for="problema">Problema</label>
+                <label for="problema">Detalhamento do problema</label>
             </div>
             <div class="col-sm-6">
                 <label for="execucao">Execução</label>

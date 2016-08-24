@@ -34,13 +34,13 @@
 
         <div class="row">
             <div class="col-sm-12">
-                <label for="abertura">Abertura</label>
+                <label for="abertura">Data de abertura</label>
             </div>
         </div>
         <div class="row">
             <div class="col-sm-12">
-                <div class="input-group date">
-                    <input id="id_abertura" name="abertura" class="form-control" value="{{ form.abertura.value|date:"d/m/Y" }}" data-date-format="dd/mm/yyyy" placeholder="Abertura do chamado" autofocus> 
+                <div class="input-group">
+                    <input id="id_abertura" name="abertura" class="form-control" value="{{ form.abertura.value|date:"d/m/Y" }}" data-date-format="dd/mm/yyyy" readonly> 
                     <span class="input-group-addon"><i class="glyphicon glyphicon-th"></i></span>
                 </div>
             </div>
@@ -103,7 +103,23 @@
 
         <div class="row">
             <div class="col-sm-12">
-                <label for="problema">Problema</label>
+                <label for="problema_comum">Problema</label>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-12">
+                <select id="problema_comum" class="form-control" name="problema_comum" data-options="{editable: false}">
+                {% for item in form.problema_comum.field.choices %}
+                    <option value="{{ item.0 }}"{% if form.problema_comum.value == item.0 %}selected="selected"{% endif %}>{{ item.1 }}</option>
+                {% endfor %}
+                </select>
+            </div>
+        </div>
+        <br/>
+
+        <div class="row">
+            <div class="col-sm-12">
+                <label for="problema">Detalhamento do problema</label>
             </div>
         </div>
 
