@@ -41,7 +41,7 @@ class ChamadoForm(forms.ModelForm):
 	def envia_email_atualizacao(self):
 		assunto = 'Setor de Telefonia - Atualização de Chamado'
 		para = [self.cleaned_data['email_solicitante']]
-		de = 'aleodoni@gmail.com'
+		de = 'telefonia@gmail.com'
 		ctx = {
 			'abertura': self.cleaned_data['abertura'],
 			'departamento': self.cleaned_data['departamento'],
@@ -83,7 +83,7 @@ class ChamadoTerceiroForm(forms.ModelForm):
 	def send_email(self):
 		assunto = 'Setor de Telefonia - Abertura de Chamado'
 		para = [self.cleaned_data['email_solicitante']]
-		de = 'aleodoni@gmail.com'
+		de = 'telefonia@gmail.com'
 		ctx = {
 			'abertura': self.cleaned_data['abertura'],
 			'departamento': self.cleaned_data['departamento'],
