@@ -75,6 +75,7 @@ class Chamado(models.Model):
 	executor = models.ForeignKey('Executor')
 	problema_comum = models.ForeignKey('ProblemasComuns')
 	email_solicitante = models.EmailField(blank=True, null=True)
+	executado = models.DecimalField(max_digits=4, decimal_places=1, blank=True, null=True)
 
 	def __unicode__(self):
 		return "Chamado : " + unicode(self.id)
@@ -115,6 +116,7 @@ class TrocaEquipamento(models.Model):
 #--------------------------------------------------------------------------------------
 class ProblemasComuns(models.Model):
 	problema = models.CharField(max_length=500)
+	estimado = models.DecimalField(max_digits=4, decimal_places=1)
 
 	def __unicode__(self):
 		return self.problema

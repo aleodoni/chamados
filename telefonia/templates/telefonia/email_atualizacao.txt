@@ -17,3 +17,4 @@ Status : {{ status }}
 Urgência : {{ urgencia }}
 Executor : {{ executor }}
 Execução : {{ execucao }}
+Tempo de execução : {{ executado }}

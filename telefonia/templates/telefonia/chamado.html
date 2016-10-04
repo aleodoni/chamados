@@ -24,26 +24,32 @@
         <input type="hidden" name="id" id="id" value="{{ form.id.value }}" />
 
         <div class="row">
-            <div class="col-sm-6">
+            <div class="col-sm-4">
                 <label for="abertura">Abertura</label>
             </div>
-            <div class="col-sm-6">
+            <div class="col-sm-4">
                 <label for="fechamento">Fechamento</label>
+            </div>
+            <div class="col-sm-4">
+                <label for="fechamento">Tempo de Execução</label>
             </div>
         </div>
 
         <div class="row">
-            <div class="col-sm-6">
+            <div class="col-sm-4">
                 <div class="input-group date">
                     <input id="abertura" name="abertura" class="form-control" value="{{ form.abertura.value|date:"d/m/Y" }}" data-date-format="dd/mm/yyyy" placeholder="Abertura do chamado" autofocus> 
                     <span class="input-group-addon"><i class="glyphicon glyphicon-th"></i></span>
                 </div>
             </div>
-            <div class="col-sm-6">
+            <div class="col-sm-4">
                 <div class="input-group date">
                     <input id="fechamento" name="fechamento" class="form-control" value="{{ form.fechamento.value|date:"d/m/Y" }}" data-date-format="dd/mm/yyyy" placeholder="Fechamento do chamado"> 
                     <span class="input-group-addon"><i class="glyphicon glyphicon-th"></i></span>
                 </div>
+            </div>
+            <div class="col-sm-4">
+                <input id="executado" name="executado" class="form-control" value="{{ form.executado.value }}" type="number">
             </div>
         </div>
         <br/>
