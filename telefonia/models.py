@@ -14,6 +14,7 @@ class Departamento(models.Model):
 class Ramal(models.Model):
 	nome = models.CharField(max_length=200)
 	numero = models.CharField(max_length=20)
+	departamento = models.ForeignKey('Departamento')
 
 	def __unicode__(self):
 		return self.nome + ' - ' + self.numero
