@@ -7,6 +7,10 @@ from django.template import Context
 from django.core.mail import EmailMessage
 from django.conf import settings
 from datetime import datetime    
+from crispy_forms.helper import FormHelper
+from crispy_forms.layout import Submit, Layout, Field, Div, Button, HTML, ButtonHolder
+from crispy_forms.bootstrap import (PrependedText, PrependedAppendedText, FormActions, AppendedText)
+from crispy_forms.bootstrap import StrictButton
 from .models import Status, Executor, Departamento, Ramal, Urgencia, Chamado, TrocaEquipamento, TipoEquipamento, ProblemasComuns
 
 class PesquisaForm(forms.Form):
@@ -16,6 +20,7 @@ class PesquisaForm(forms.Form):
 	atendente = forms.ModelChoiceField(queryset=Executor.objects.all().order_by('nome'), empty_label='TODOS')
 	dtinicio = forms.DateField()
 	dtfim = forms.DateField()
+
 
 class ChamadoForm(forms.ModelForm):
 	class Meta:
@@ -69,6 +74,7 @@ class TrocaForm(forms.ModelForm):
 
 	tipo_equipamento = forms.ModelChoiceField(queryset=TipoEquipamento.objects.all().order_by('nome'), empty_label=None)
 
+
 class ChamadoTerceiroForm(forms.ModelForm):
 	class Meta:
 		model = Chamado
@@ -97,3 +103,26 @@ class ChamadoTerceiroForm(forms.ModelForm):
 		mensagem = get_template('telefonia/email_abertura.txt').render(Context(ctx))
 				
 		EmailMessage(assunto, mensagem, to=para, from_email=de).send()
+
+
+class PesquisaRamaisForm(forms.Form):
+	departamento = forms.CharField(label="Departamento", required=False)
+	pessoa = forms.CharField(label="Pessoa", required=False)
+
+	def __init__(self, *args, **kwargs):
+		super(PesquisaRamaisForm, self).__init__(*args, **kwargs)
+
+		self.helper = FormHelper()
+		self.helper.form_method = 'get'
+		self.helper.form_tag = False
+		self.helper.layout = Layout(
+			Div(
+				Div('departamento', css_class='col-md-6',),
+				Div('pessoa', css_class='col-md-6',),
+				css_class='col-md-12 row',
+			),
+			Div(
+				Div(FormActions(Submit('pesquisa', 'Pesquisa')), css_class='col-md-6',),
+				css_class='col-md-12 row',
+			),
+		)

@@ -1,6 +1,8 @@
 # -*- coding: utf-8 -*-
 
 import os
+import json
+import codecs
 from django.conf import settings
 
 from django.shortcuts import render
@@ -12,15 +14,18 @@ from django.utils.dateparse import parse_date
 from django.views import generic
 from django.views.generic import CreateView
 from django.views.generic.edit import UpdateView
+from django.views.generic.edit import FormView
 from django.views.generic import DeleteView
 from django.contrib.messages.views import SuccessMessageMixin
 from django.contrib import messages
+from django.core.serializers.json import DjangoJSONEncoder
+from django.core import serializers
 
 from datetime import datetime    
 
-from .models import Status, Executor, Chamado, Urgencia, TrocaEquipamento
+from .models import Status, Executor, Chamado, Urgencia, TrocaEquipamento, Ramal, Departamento
 
-from .forms import PesquisaForm
+from .forms import PesquisaForm, PesquisaRamaisForm
 from .forms import ChamadoForm
 from .forms import TrocaForm
 from .forms import ChamadoTerceiroForm
@@ -28,6 +33,8 @@ from .forms import ChamadoTerceiroForm
 from .util import status_default, executor_default
 
 from easy_pdf.views import PDFTemplateView
+
+#from django.contrib.auth.mixins import LoginRequiredMixin
 
 @login_required
 def index(request):
@@ -247,4 +254,60 @@ class ChamadoTerceiroCreateView(SuccessMessageMixin, CreateView):
 	def form_valid(self, form):
 		form.send_email()
 		return super(ChamadoTerceiroCreateView, self).form_valid(form)
+
+
+#-----------------------------------------------------------------------------------------------------------------------------
+# classes de segurança/acesso
+#-----------------------------------------------------------------------------------------------------------------------------		
+#class ChamadosLoginRequired(LoginRequiredMixin):
+#	login_url = "/login/"	
+
+
+#-----------------------------------------------------------------------------------------------------------------------------
+# classes para pesquisa/listagem de ramais
+#-----------------------------------------------------------------------------------------------------------------------------		
+class ListaRamaisView(SuccessMessageMixin, FormView):
+	template_name = "telefonia/ramais.html"
+	form_class = PesquisaRamaisForm
+
+	def get(self, request, *args, **kwargs):
+
+		context = self.get_context_data(**kwargs)
+
+		departamento = self.request.GET.get('departamento','')
+		pessoa = self.request.GET.get('pessoa','')
+
+		lista_ramais = Ramal.objects.order_by('departamento__nome')
+		if (departamento != ''):
+			lista_ramais = lista_ramais.filter(departamento__nome__icontains=departamento)
+		if (pessoa != ''):
+			lista_ramais = lista_ramais.filter(nome__icontains=pessoa)
+
+		data = {'departamento': departamento, 'pessoa': pessoa}
+		form = PesquisaRamaisForm(initial=data)
+
+		context['form'] = form
+		context['lista_ramais'] = lista_ramais
+
+		return self.render_to_response(context)
+
+
+
+#-----------------------------------------------------------------------------------------------------------------------------
+# gera json com lista de departamentos
+#-----------------------------------------------------------------------------------------------------------------------------		
+def departamento_json(request):
+	resposta = []
+
+	for e in Departamento.objects.all():
+		depto_json = {}
+		depto_json['nome'] = e.nome
+		resposta.append(depto_json)
+
+	data = json.dumps(resposta)
 	
+	return HttpResponse(
+		#json.dumps(resposta, cls=DjangoJSONEncoder),
+		data,
+		content_type="application/json"
+	)			

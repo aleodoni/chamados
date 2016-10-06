@@ -20,4 +20,7 @@ urlpatterns = [
 	url(r'^chamado/$', views.ChamadoCreateView.as_view(), name='chamado'),
 	url(r'^chamado/edita/(?P<pk>[0-9]+)/$', views.ChamadoUpdateView.as_view(), name='edita'),
 	url(r'^chamado_terceiro/$', views.ChamadoTerceiroCreateView.as_view(), name='chamado_terceiro'),
+	url(r'^ramais/$', views.ListaRamaisView.as_view(), name='ramais'),
+
+	url(r'^api/depto/$', views.departamento_json, name='api-depto'),
 ]
