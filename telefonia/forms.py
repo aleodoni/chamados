@@ -122,7 +122,11 @@ class PesquisaRamaisForm(forms.Form):
 				css_class='col-md-12 row',
 			),
 			Div(
-				Div(FormActions(Submit('pesquisa', 'Pesquisa')), css_class='col-md-6',),
-				css_class='col-md-12 row',
+				Div(
+					FormActions(Submit('pesquisa', 'Pesquisa')),
+					StrictButton('Imprime', css_class="btn-secondary btn", style="align:bottom", id='btn_imprime', onclick='imprime()'), 
+					css_class='col-xs-2',
+				),
+				css_class='col-xs-12 row',
 			),
 		)

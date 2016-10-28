@@ -1,0 +1,42 @@
+[
+
+	{
+		"model": "telefonia.telefonia_status", 
+		"pk": 1, 
+		"fields": {
+			"nome": "ABERTO", 
+			"default": True
+		}
+	}, 
+
+		"model": "telefonia.telefonia_status", 
+		"pk": 2, 
+		"fields": {
+			"nome": "FECHADO", 
+			"default": False
+		}
+	}, 
+	{
+		"model": "telefonia.telefonia_urgencia", 
+		"pk": 1, 
+		"fields": {
+			"nome": "NORMAL"
+		}
+	}, 
+	{
+		"model": "telefonia.telefonia_urgencia", 
+		"pk": 2, 
+		"fields": {
+			"nome": "URGENTE"
+		}
+	}, 
+	{
+		"model": "telefonia.telefonia_executor", 
+		"pk": 1, 
+		"fields": {
+			"nome": "EDERSON",
+			"default": True
+		}
+	}, 
+
+]

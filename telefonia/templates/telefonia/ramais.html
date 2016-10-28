@@ -35,6 +35,12 @@
 </div>
 </div>
 
+<form id="frmrelatorio" name="frmrelatorio" method="GET" action="relatorio.pdf" target="_rel">
+	{% csrf_token %}
+    <input type="hidden" name="pdepartamento" id="pdepartamento" />
+    <input type="hidden" name="ppessoa" id="ppessoa" />
+</form>
+
 <script language="javascript">
 	$(function() {
 		$('#id_departamento').typeahead({
@@ -49,6 +55,12 @@
     		}
 		});
 	});
+
+	function imprime() {
+		$("#pdepartamento").val($("#id_departamento").val());
+		$("#ppessoa").val($("#id_pessoa").val());
+        $("#frmrelatorio").submit();
+	}
 </script>
 
 {% endblock %}

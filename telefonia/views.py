@@ -311,3 +311,34 @@ def departamento_json(request):
 		data,
 		content_type="application/json"
 	)			
+
+
+#-----------------------------------------------------------------------------------------------------------------------------
+# Relatório lista de ramais
+#-----------------------------------------------------------------------------------------------------------------------------		
+class RamaisPDFView(PDFTemplateView):
+	template_name = 'telefonia/relatorio_ramais.html'
+	departamento = ''
+	pessoa = ''
+	lista_ramais = None
+
+	def get_context_data(self, **kwargs):
+		context = super(PDFTemplateView, self).get_context_data(**kwargs)
+		context['title'] = 'Lista de Ramais'
+		context['pagesize'] = 'A4 portrait'
+
+		lista_ramais = Ramal.objects.order_by('departamento__nome')
+
+		if (self.departamento != ''):
+			lista_ramais = lista_ramais.filter(departamento__nome__icontains=self.departamento)
+		if (self.pessoa != ''):
+			lista_ramais = lista_ramais.filter(nome__icontains=self.pessoa)
+
+		context['lista_ramais'] = lista_ramais
+		return context
+
+	def get(self, request, *args, **kwargs):
+		context = super(PDFTemplateView, self).get_context_data(**kwargs)
+		self.departamento =  self.request.GET.get('pdepartamento', '')
+		self.pessoa =  self.request.GET.get('ppessoa', '')
+		return super(RamaisPDFView, self).get(request, *args, **kwargs)	
