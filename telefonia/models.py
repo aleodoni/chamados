@@ -14,6 +14,7 @@ class Departamento(models.Model):
 class Ramal(models.Model):
 	nome = models.CharField(max_length=200)
 	numero = models.CharField(max_length=20)
+	departamento = models.ForeignKey('Departamento')
 
 	def __unicode__(self):
 		return self.nome + ' - ' + self.numero
@@ -73,6 +74,9 @@ class Chamado(models.Model):
 	status = models.ForeignKey('Status')
 	urgencia = models.ForeignKey('Urgencia')
 	executor = models.ForeignKey('Executor')
+	problema_comum = models.ForeignKey('ProblemasComuns')
+	email_solicitante = models.EmailField(blank=True, null=True)
+	executado = models.DecimalField(max_digits=4, decimal_places=1, blank=True, null=True)
 
 	def __unicode__(self):
 		return "Chamado : " + unicode(self.id)
@@ -109,3 +113,11 @@ class TrocaEquipamento(models.Model):
 	serial_velho = models.CharField(max_length=50, null=True)
 	serial_novo = models.CharField(max_length=50, null=True)
 	motivo = models.CharField(max_length=500, blank=True, null=True)
+
+#--------------------------------------------------------------------------------------
+class ProblemasComuns(models.Model):
+	problema = models.CharField(max_length=500)
+	estimado = models.DecimalField(max_digits=4, decimal_places=1)
+
+	def __unicode__(self):
+		return self.problema

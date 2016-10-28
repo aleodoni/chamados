@@ -29,10 +29,12 @@ DEBUG = True
 
 ALLOWED_HOSTS = ['*']
 
+CRISPY_TEMPLATE_PACK = 'bootstrap3'
 
 # Application definition
 
 INSTALLED_APPS = (
+    'crispy_forms',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -133,3 +135,13 @@ DATE_FORMAT = 'd/m/Y'
 STATUS_DEFAULT = 2
 URGENCIA_DEFAULT = 2
 EXECUTOR_DEFAULT = 1
+
+
+#---------------------------------------------------------------------------------------------------------------------
+# Variáveis para envio de email
+#---------------------------------------------------------------------------------------------------------------------
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_HOST_USER = 'telefoniacamara@gmail.com'
+EMAIL_HOST_PASSWORD = 'camara321'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True

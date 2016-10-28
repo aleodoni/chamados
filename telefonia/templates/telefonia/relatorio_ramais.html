@@ -1,0 +1,80 @@
+{% extends "easy_pdf/base.html" %}
+{% load telefonia_extras %}
+
+{% block layout_style %}
+    <style type="text/css">
+        @page {
+            size: {{ pagesize|default:"A4" }};
+            margin-left: 1.5cm;
+            margin-right: 1.5cm;
+            margin-top: 4cm;
+            margin-bottom: 1cm;
+            @frame header {
+                -pdf-frame-content: page-header;
+                margin-top: 1cm;
+                margin-right: 2mm;
+                margin-bottom: 1cm;
+                margin-left: 1.5cm;
+            }
+        }
+    </style>
+{% endblock %}
+
+
+{% block extra_style %}
+    <style type="text/css">
+    	.header h1 {
+    		padding-left: 60px;
+    		padding-top:-55px;
+            font-size: 24px;
+            font-weight: normal;
+        }
+
+        .header h2 {
+            font-size: 18px;
+            font-weight: normal;
+        }
+
+        table.bordered {
+            border-top: 0.1pt solid #999999;
+            border-bottom: 0.1pt solid #999999;
+        }
+
+        tr.departamento {
+        	padding-top: 10px;
+        }
+
+        tr, td, th { border: none; }
+
+        .logo { margin-bottom: 20px;}
+
+    </style>
+{% endblock %}   
+
+{% block page_header %}
+	<div id="page-header">
+        <div class="header">
+        	<img src="{{''|brasao}}" height="40" style="margin-top:5px;margin-right:130px;"></img>
+        	<h1>Câmara Municipal de Curitiba</h1>
+            <h2 align="center">Lista de Ramais</h2>
+        </div>
+    </div>
+{% endblock %}   
+
+{% block content %}
+    <div id="content">
+    	<div class="main">
+        {% if lista_ramais %}
+        	<table class="bordered">
+    			{% regroup lista_ramais by departamento.nome as lista_agrupada %}
+				{% for item in lista_agrupada %}
+					<tr class="departamento"><td colspan="2"><h1>{{ item.grouper }}</h1></td></tr>
+					{% for ramal in item.list %}
+						<tr><td>{{ ramal.nome }}<td>{{ ramal.numero }}</td></tr>
+					{% endfor %}
+				{% endfor %}
+			</table>
+        {% endif %}
+    </div>
+    </div>
+{% endblock %}   

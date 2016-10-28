@@ -24,49 +24,61 @@
         <input type="hidden" name="id" id="id" value="{{ form.id.value }}" />
 
         <div class="row">
-            <div class="col-sm-6">
+            <div class="col-sm-4">
                 <label for="abertura">Abertura</label>
             </div>
-            <div class="col-sm-6">
+            <div class="col-sm-4">
                 <label for="fechamento">Fechamento</label>
+            </div>
+            <div class="col-sm-4">
+                <label for="fechamento">Tempo de Execução</label>
             </div>
         </div>
 
         <div class="row">
-            <div class="col-sm-6">
+            <div class="col-sm-4">
                 <div class="input-group date">
                     <input id="abertura" name="abertura" class="form-control" value="{{ form.abertura.value|date:"d/m/Y" }}" data-date-format="dd/mm/yyyy" placeholder="Abertura do chamado" autofocus> 
                     <span class="input-group-addon"><i class="glyphicon glyphicon-th"></i></span>
                 </div>
             </div>
-            <div class="col-sm-6">
+            <div class="col-sm-4">
                 <div class="input-group date">
                     <input id="fechamento" name="fechamento" class="form-control" value="{{ form.fechamento.value|date:"d/m/Y" }}" data-date-format="dd/mm/yyyy" placeholder="Fechamento do chamado"> 
                     <span class="input-group-addon"><i class="glyphicon glyphicon-th"></i></span>
                 </div>
             </div>
+            <div class="col-sm-4">
+                <input id="executado" name="executado" class="form-control" value="{{ form.executado.value }}" type="number">
+            </div>
         </div>
         <br/>
 
         <div class="row">
-            <div class="col-sm-6">
+            <div class="col-sm-4">
+                <label for="departamento">Departamento</label>
+            </div>
+            <div class="col-sm-4">
                 <label for="solicitante">Solicitante</label>
             </div>
-            <div class="col-sm-6">
-                <label for="departamento">Departamento</label>
+            <div class="col-sm-4">
+                <label for="email_solicitante">email Solicitante</label>
             </div>
         </div>
 
         <div class="row">
-            <div class="col-sm-6">
-                <input id="solicitante" name="solicitante" class="form-control" value="{{ form.solicitante.value }}" placeholder="Solicitante" required>
-            </div>
-            <div class="col-sm-6">
+            <div class="col-sm-4">
                 <select id="departamento" class="form-control" name="departamento">
                 {% for item in form.departamento.field.choices %}
                     <option value="{{ item.0 }}"{% if form.departamento.value == item.0 %}selected="selected"{% endif %}>{{ item.1 }}</option>
                 {% endfor %}
                 </select>
+            </div>
+            <div class="col-sm-4">
+                <input id="id_solicitante" name="solicitante" class="form-control" value="{{ form.solicitante.value }}" placeholder="Solicitante" required>
+            </div>
+            <div class="col-sm-4">
+                <input id="id_email_solicitante" name="email_solicitante" class="form-control" value="{{ form.email_solicitante.value }}" placeholder="email Solicitante">
             </div>
         </div>
         <br/>
@@ -98,8 +110,24 @@
         <br/>
 
         <div class="row">
+            <div class="col-sm-12">
+                <label for="problema_comum">Problema</label>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-12">
+                <select id="problema_comum" class="form-control" name="problema_comum" data-options="{editable: false}">
+                {% for item in form.problema_comum.field.choices %}
+                    <option value="{{ item.0 }}"{% if form.problema_comum.value == item.0 %}selected="selected"{% endif %}>{{ item.1 }}</option>
+                {% endfor %}
+                </select>
+            </div>
+        </div>
+        <br/>
+
+        <div class="row">
             <div class="col-sm-6">
-                <label for="problema">Problema</label>
+                <label for="problema">Detalhamento do problema</label>
             </div>
             <div class="col-sm-6">
                 <label for="execucao">Execução</label>

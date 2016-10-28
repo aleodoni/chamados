@@ -1,0 +1,66 @@
+{% extends "base_guest.html" %}
+{% load staticfiles %}
+{% load crispy_forms_tags %}
+
+{% block title %}Ramais{% endblock %}
+
+{% block content %}
+
+<br/>
+<div class="panel panel-default">
+	<div class="panel-heading">Pesquisa de Ramais</div>
+  		<div class="panel-body">
+			<form action="" method="get">
+				{% crispy form %}
+			</form>
+		</div>
+	</div>
+</div>			
+
+<div class="panel panel-info">
+<div class="panel-heading">Resultado da Pesquisa</div>
+<div class="panel-body">
+<div class="col-md-12">
+	{% regroup lista_ramais by departamento.nome as lista_agrupada %}
+	{% for item in lista_agrupada %}
+		<h2>{{ item.grouper }}</h2>
+		<ul class="list-group">
+			{% for ramal in item.list %}
+				<li class="list-group-item">{{ ramal.nome }}<span class="badge">{{ ramal.numero }}</span></li>
+			{% endfor %}
+		</ul>
+	{% endfor %}
+</div>
+</div>
+</div>
+</div>
+
+<form id="frmrelatorio" name="frmrelatorio" method="GET" action="relatorio.pdf" target="_rel">
+	{% csrf_token %}
+    <input type="hidden" name="pdepartamento" id="pdepartamento" />
+    <input type="hidden" name="ppessoa" id="ppessoa" />
+</form>
+
+<script language="javascript">
+	$(function() {
+		$('#id_departamento').typeahead({
+			source: function(query, process) {
+				return $.get('/telefonia/api/depto/', function (data) {
+					process(data);
+				});
+			},
+			autoSelect: false,
+			displayText: function (item) {
+        		return item.nome;
+    		}
+		});
+	});
+
+	function imprime() {
+		$("#pdepartamento").val($("#id_departamento").val());
+		$("#ppessoa").val($("#id_pessoa").val());
+        $("#frmrelatorio").submit();
+	}
+</script>
+
+{% endblock %}
