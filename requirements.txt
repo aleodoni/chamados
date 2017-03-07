@@ -22,8 +22,10 @@ Jinja2==2.8
 MarkupSafe==0.23
 Pillow==2.9.0
 psycopg2==2.6.1
+py==1.4.32
 Pygments==2.0.2
 PyPDF2==1.25.1
+pytest==3.0.6
 python-dateutil==2.4.2
 python-mimeparse==0.1.4
 ruamel.base==1.0.0
