@@ -80,20 +80,33 @@ WSGI_APPLICATION = 'chamados.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/1.8/ref/settings/#databases
 
+#---------------------------------------------------------------------------------------------------------------------
+# Para Testes e desenv
+#---------------------------------------------------------------------------------------------------------------------
 DATABASES = {
     'default': {
-#        'ENGINE': 'django.db.backends.sqlite3',
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'OPTIONS': {
-                'options': '-c search_path=telefonia'
-        },
-        'NAME': 'chamados',
-        'USER': 'telefonia',
-        'PASSWORD': 'telefonia',
-        'HOST': '127.0.0.1',
-        'PORT': '5432',
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': 'mydatabase',
     }
 }
+
+#---------------------------------------------------------------------------------------------------------------------
+# Para Produção
+#---------------------------------------------------------------------------------------------------------------------
+#DATABASES = {
+#    'default': {
+#        'ENGINE': 'django.db.backends.sqlite3',
+#        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+#        'OPTIONS': {
+#                'options': '-c search_path=telefonia'
+#        },
+#        'NAME': 'chamados',
+#        'USER': 'telefonia',
+#        'PASSWORD': 'telefonia',
+#        'HOST': '127.0.0.1',
+#        'PORT': '5432',
+#    }
+#}
 
 
 # Internationalization
