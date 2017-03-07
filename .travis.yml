@@ -1,0 +1,10 @@
+language: python
+
+python:
+	- "3.4"
+
+# comando para instalar dependências
+install: "pip install -r requirements.txt"
+
+# comando para rodas os testes
+script: pytest
