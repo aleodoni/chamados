@@ -1,10 +1,16 @@
 language: python
 
 python:
-- "2.7"
+  - "2.7"
 
 # comando para instalar dependencias
-install: "pip install -r requirements.txt"
+install: 
+  - pip install -r requirements.txt
+  - pip install coveralls
 
 # comando para rodas os testes
-script: python manage.py test
+script: 
+  coverage run manage.py test
+
+after_success:
+  coveralls
