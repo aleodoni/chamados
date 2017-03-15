@@ -1,3 +1,8 @@
-telefonia/migrations
-*.pyc
-telefonia.tar.gz
+staticfiles/
+
+# Basics
+*.py[cod]
+__pycache__
+
+# npm
+node_modules/
