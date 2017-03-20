@@ -4,7 +4,7 @@ from django.conf.urls import url
 from django.contrib.auth import views as auth_views
 
 from . import views
-from telefonia.views import TrocaEquipamentoIndexView
+from chamados.telefonia.views import TrocaEquipamentoIndexView
 
 urlpatterns = [
 	url(r'^$', views.index, name='index'),
