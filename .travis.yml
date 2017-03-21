@@ -10,8 +10,10 @@ install:
 
 # configurações do banco de dados teste
 before_escript:
-  - psql -c "CREATE USER telefonia WITH PASSWORD 'telefonia';" -U postgres
-  - psql -c "ALTER USER telefonia CREATEDB;" -U postgres
+  #- psql -c "CREATE USER telefonia WITH PASSWORD 'telefonia';" -U postgres
+  - psql -c "CREATE ROLE telefonia SUPERUSER PASSWORD 'telefonia';" -U postgres
+  #- psql -c "ALTER ROLE telefonia WITH LOGIN ENCRYPTED PASSWORD 'telefonia';" -U postgres
+  #- psql -c "ALTER USER telefonia CREATEDB;" -U postgres
 
 # comando para rodas os testes
 script: 
