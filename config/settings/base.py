@@ -80,6 +80,8 @@ MIDDLEWARE_CLASSES = [
     'django.contrib.auth.middleware.SessionAuthenticationMiddleware',
 ]
 
+ALLOWED_HOSTS = ['*']
+
 # MIGRATIONS CONFIGURATION
 # ------------------------------------------------------------------------------
 #MIGRATION_MODULES = {
