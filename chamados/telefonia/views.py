@@ -94,7 +94,7 @@ class TrocaEquipamentoIndexView(generic.ListView):
 	def get_queryset(self):
 		pk = 0
 		if 'pk' in self.kwargs:
-			pk = self.kwargs['pk']
+			pk = int(self.kwargs['pk'])
 		if pk > 0:
 			lista = TrocaEquipamento.objects.order_by('chamado')
 			lista = lista.filter(chamado=pk)
