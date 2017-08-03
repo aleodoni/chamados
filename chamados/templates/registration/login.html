@@ -2,7 +2,7 @@
 
 {% block content %}
 
-<form class="form-signin" method="post" action="{% url 'django.contrib.auth.views.login' %}">
+<form class="form-signin" method="post" action="/autentica/valida-usuario/">
 	{% csrf_token %}
 	{% if form.errors %}
 		<div class="alert alert-danger">

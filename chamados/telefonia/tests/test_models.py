@@ -1,6 +1,6 @@
 from django.test import TestCase
-from telefonia.models import Departamento, Ramal, Problemas, Status, Urgencia, Executor, TipoEquipamento, ProblemasComuns, Chamado, TrocaEquipamento
-from django.db import IntegrityError
+from chamados.telefonia.models import Departamento, Ramal, Problemas, Status, Urgencia, Executor, TipoEquipamento, ProblemasComuns, Chamado, TrocaEquipamento
+from django.db import IntegrityError, DataError
 
 #-------------------------------------------------------------------------------------------------
 class DepartamentoTestCase(TestCase):
@@ -28,7 +28,11 @@ class RamalTestCase(TestCase):
 
 	def test_ramal_departamento_nulo(self):
 		with self.assertRaises(IntegrityError):
-			Ramal.objects.create(nome='Nome', numero='123456789012345678901234567890')
+			Ramal.objects.create(nome='Nome', numero='1234567890123456789')
+
+	def test_ramal_numero_maior_20(self):
+		with self.assertRaises(DataError):
+			Ramal.objects.create(nome='Nome', numero='12345678901234567890000000')
 
 	def test_ramal_nome_nulo(self):
 		with self.assertRaises(IntegrityError):
@@ -129,7 +133,7 @@ class ChamadoTestCase(TestCase):
 		Chamado.objects.create(abertura="2017-01-01", fechamento=None, solicitante='Solicitante', departamento=self.depto, ramal_atendimento=self.ramal_at, ramal_contato=self.ramal_co, problema='Problema', execucao='Execucao', status=self.status, urgencia=self.urgencia, executor=self.executor, problema_comum=self.problema_comum, email_solicitante='solicitante@a.com', executado=None)
 
 	def test_chamado_foi_criado(self):
-		chamado = Chamado.objects.get(id=1)
+		chamado = Chamado.objects.get(solicitante='Solicitante')
 		self.assertEqual(chamado.solicitante, 'Solicitante')
 
 	def test_chamado_abertura_nula(self):
