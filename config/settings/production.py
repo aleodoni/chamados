@@ -48,7 +48,7 @@ ALLOWED_HOSTS = env.list('DJANGO_ALLOWED_HOSTS', default=['*', ])
 
 INSTALLED_APPS += ['gunicorn', ]
 
-STATIC_ROOT = '/usr/share/nginx/telefonia/static/'
+STATIC_ROOT = '/var/www/html/chamados/static/'
 
 
 # STORAGE CONFIGURATION
