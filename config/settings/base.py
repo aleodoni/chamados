@@ -17,6 +17,7 @@ APPS_DIR = ROOT_DIR.path('chamados')
 
 # Load operating system environment variables and then prepare to use them
 env = environ.Env()
+env.read_env(env_file=ROOT_DIR('.env'))
 
 # .env file, should load only in development environment
 READ_DOT_ENV_FILE = env.bool('DJANGO_READ_DOT_ENV_FILE', default=False)
@@ -37,12 +38,9 @@ DJANGO_APPS = [
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
-    'django.contrib.sites',
+    #'django.contrib.sites',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-
-    # Useful template tags:
-    # 'django.contrib.humanize',
 
     # Admin
     'django.contrib.admin',
@@ -50,6 +48,8 @@ DJANGO_APPS = [
 THIRD_PARTY_APPS = [
     'crispy_forms',  # Form layouts
     'easy_pdf',
+    'django_python3_ldap',
+    'ldapdb',
     # 'allauth',  # registration
     # 'allauth.account',  # registration
     # 'allauth.socialaccount',  # registration
@@ -60,6 +60,7 @@ THIRD_PARTY_APPS = [
 LOCAL_APPS = [
     # custom users app
     'chamados.telefonia.apps.TelefoniaConfig',
+    'chamados.autentica.apps.AutenticaConfig',
     # Your stuff: custom apps go here
 ]
 
@@ -99,7 +100,12 @@ FIXTURE_DIRS = (
 
 # EMAIL CONFIGURATION
 # ------------------------------------------------------------------------------
-EMAIL_BACKEND = env('DJANGO_EMAIL_BACKEND', default='django.core.mail.backends.smtp.EmailBackend')
+EMAIL_BACKEND = env('DJANGO_EMAIL_BACKEND')
+EMAIL_HOST = env('EMAIL_HOST')
+EMAIL_HOST_USER = env('EMAIL_HOST_USER')
+EMAIL_HOST_PASSWORD = env('EMAIL_HOST_PASSWORD')
+EMAIL_PORT = env('EMAIL_PORT')
+EMAIL_USE_TLS = env('EMAIL_USE_TLS')
 
 # MANAGER CONFIGURATION
 # ------------------------------------------------------------------------------
@@ -115,20 +121,15 @@ MANAGERS = ADMINS
 # ------------------------------------------------------------------------------
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#databases
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'OPTIONS': {
-                'options': '-c search_path=telefonia'
-        },
-        'NAME': 'chamados',
-        'USER': 'telefonia',
-        'PASSWORD': 'telefonia',
-        'HOST': '127.0.0.1',
-        'PORT': '5432',
-    }
+    'default': env.db(),
+    'ldap': {
+        'ENGINE': 'ldapdb.backends.ldap',
+        'NAME': env('LDAP_AUTH_URL'),
+     },
 }
 DATABASES['default']['ATOMIC_REQUESTS'] = True
 
+DATABASE_ROUTERS = ['ldapdb.router.Router']
 
 # GENERAL CONFIGURATION
 # ------------------------------------------------------------------------------
@@ -250,9 +251,9 @@ AUTH_PASSWORD_VALIDATORS = [
 # AUTHENTICATION CONFIGURATION
 # ------------------------------------------------------------------------------
 AUTHENTICATION_BACKENDS = [
+    "django_python3_ldap.auth.LDAPBackend",
     'django.contrib.auth.backends.ModelBackend',
-    'allauth.account.auth_backends.AuthenticationBackend',
-]
+ ]
 
 # Some really nice defaults
 ACCOUNT_AUTHENTICATION_METHOD = 'username'
@@ -267,7 +268,7 @@ SOCIALACCOUNT_ADAPTER = 'canto.users.adapters.SocialAccountAdapter'
 # Select the correct user model
 # AUTH_USER_MODEL = 'users.User'
 LOGIN_REDIRECT_URL = '/telefonia/'
-LOGIN_URL = '/login/'
+LOGIN_URL = '/autentica/loga/'
 LOGOUT_URL = '/logout/'
 
 # SLUGLIFIER
@@ -293,3 +294,31 @@ ADMIN_URL = r'^admin/'
 
 # Your common stuff: Below this line define 3rd party library settings
 # ------------------------------------------------------------------------------
+
+AUTH_USER_MODEL = 'autentica.User'
+
+
+# LDAP
+# ------------------------------------------------------------------------------
+#LDAP_AUTH_URL = "ldap://ldap"
+LDAP_AUTH_URL = env('LDAP_AUTH_URL', default='')
+LDAP_AUTH_USE_TLS = env('LDAP_AUTH_USE_TLS', default=False, cast=bool)
+LDAP_AUTH_SEARCH_BASE = env('LDAP_AUTH_SEARCH_BASE', default='')
+LDAP_AUTH_OBJECT_CLASS = env('LDAP_AUTH_OBJECT_CLASS', default='')
+LDAP_AUTH_USER_FIELDS = {
+    "username": env('LDAP_AUTH_USER_FIELDS_USERNAME', default=''),
+    "first_name": env('LDAP_AUTH_USER_FIELDS_FIRST_NAME', default=''),
+    "last_name": env('LDAP_AUTH_USER_FIELDS_LAST_NAME', default=''),
+    "email": env('LDAP_AUTH_USER_FIELDS_EMAIL', default=''),
+    "matricula": env('LDAP_AUTH_USER_FIELDS_MATRICULA', default=''),
+    "lotado": env('LDAP_AUTH_USER_FIELDS_LOTADO', default=''),
+    "chefia": env('LDAP_AUTH_USER_FIELDS_CHEFIA', default=''),
+}
+LDAP_AUTH_USER_LOOKUP_FIELDS = ("username",)
+LDAP_AUTH_CLEAN_USER_DATA = "django_python3_ldap.utils.clean_user_data"
+LDAP_AUTH_SYNC_USER_RELATIONS = "django_python3_ldap.utils.sync_user_relations"
+LDAP_AUTH_FORMAT_SEARCH_FILTERS = "django_python3_ldap.utils.format_search_filters"
+LDAP_AUTH_FORMAT_USERNAME = "django_python3_ldap.utils.format_username_openldap"
+LDAP_AUTH_ACTIVE_DIRECTORY_DOMAIN = None
+LDAP_AUTH_CONNECTION_USERNAME = None
+LDAP_AUTH_CONNECTION_PASSWORD = None

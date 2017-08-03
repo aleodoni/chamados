@@ -2,15 +2,21 @@
 
 from django.db import models
 from django.conf import settings
+from django.utils.encoding import python_2_unicode_compatible
 
 #--------------------------------------------------------------------------------------
+@python_2_unicode_compatible
 class Departamento(models.Model):
 	nome = models.CharField(max_length=300)
 
 	def __unicode__(self):
 		return self.nome
 
+	def __str__(self):
+		return self.nome
+
 #--------------------------------------------------------------------------------------
+@python_2_unicode_compatible
 class Ramal(models.Model):
 	nome = models.CharField(max_length=200)
 	numero = models.CharField(max_length=20)
@@ -19,20 +25,28 @@ class Ramal(models.Model):
 	def __unicode__(self):
 		return self.nome + ' - ' + self.numero
 
+	def __str__(self):
+		return self.nome + ' - ' + self.numero
+
 	class Meta:
 		verbose_name_plural = "ramais"
 
 #--------------------------------------------------------------------------------------
+@python_2_unicode_compatible
 class Problemas(models.Model):
 	nome = models.CharField(max_length=500)
 
 	def __unicode__(self):
 		return self.nome
 
+	def __str__(self):
+		return self.nome
+
 	class Meta:
 		verbose_name_plural = "problemas"
 
 #--------------------------------------------------------------------------------------
+@python_2_unicode_compatible
 class Status(models.Model):
 	nome = models.CharField(max_length=100)
 	default = models.BooleanField(default=False)
@@ -40,17 +54,25 @@ class Status(models.Model):
 	def __unicode__(self):
 		return self.nome
 
+	def __str__(self):
+		return self.nome
+
 	class Meta:
 		verbose_name_plural = "status"
 
 #--------------------------------------------------------------------------------------
+@python_2_unicode_compatible
 class Urgencia(models.Model):
 	nome = models.CharField(max_length=100)
 
 	def __unicode__(self):
 		return self.nome
 
+	def __str__(self):
+		return self.nome
+
 #--------------------------------------------------------------------------------------
+@python_2_unicode_compatible
 class Executor(models.Model):
 	nome = models.CharField(max_length=100)
 	default = models.BooleanField(default=False)
@@ -58,10 +80,14 @@ class Executor(models.Model):
 	def __unicode__(self):
 		return self.nome
 
+	def __str__(self):
+		return self.nome
+
 	class Meta:
 		verbose_name_plural = "executores"
 
 #--------------------------------------------------------------------------------------
+@python_2_unicode_compatible
 class Chamado(models.Model):
 	abertura = models.DateField()
 	fechamento = models.DateField(blank=True, null=True)
@@ -79,6 +105,9 @@ class Chamado(models.Model):
 	executado = models.DecimalField(max_digits=4, decimal_places=1, blank=True, null=True)
 
 	def __unicode__(self):
+		return "Chamado : " + unicode(self.id)
+
+	def __str__(self):
 		return "Chamado : " + unicode(self.id)
 
 	# foi sobrescrito o metodo save para contemplar a nova tela de chamados de terceiros onde os campos 
@@ -100,13 +129,18 @@ class Chamado(models.Model):
 		super(Chamado, self).save(*args, **kwargs)   
 
 #--------------------------------------------------------------------------------------
+@python_2_unicode_compatible
 class TipoEquipamento(models.Model):
 	nome = models.CharField(max_length=100)
 
 	def __unicode__(self):
 		return self.nome
 
+	def __str__(self):
+		return self.nome
+
 #--------------------------------------------------------------------------------------
+@python_2_unicode_compatible
 class TrocaEquipamento(models.Model):
 	chamado = models.ForeignKey('Chamado')
 	tipo_equipamento = models.ForeignKey('TipoEquipamento')
@@ -115,9 +149,13 @@ class TrocaEquipamento(models.Model):
 	motivo = models.CharField(max_length=500, blank=True, null=True)
 
 #--------------------------------------------------------------------------------------
+@python_2_unicode_compatible
 class ProblemasComuns(models.Model):
 	problema = models.CharField(max_length=500)
 	estimado = models.DecimalField(max_digits=4, decimal_places=1)
 
 	def __unicode__(self):
+		return self.problema
+
+	def __str__(self):
 		return self.problema
